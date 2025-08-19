@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Habilidades - Dev Ranniel Muñoz" %}{% endblock %}
+
+{% block content %}
+<section class="skills">
+    <!-- Título principal -->
+    <h2 class="skills-title">{% trans "Habilidades Técnicas" %}</h2>
+    <p class="skills-subtitle">{% trans "Estas son mis principales competencias en desarrollo de software y tecnologías web." %}</p>
+    
+    <div class="skills-grid">
+        <!-- Python -->
+        <div class="skill-card">
+            <img src="{% static 'python4.webp' %}" alt="Python Logo" class="skill-logo">
+            <h4>{% trans "Python" %}</h4>
+            <p>{% trans "Conocimiento avanzado de Python, especializado en el desarrollo web y automatización de procesos." %}</p>
+        </div>
+
+        <!-- Django -->
+        <div class="skill-card">
+            <img src="{% static 'django.webp' %}" alt="Django Logo" class="skill-logo">
+            <h4>{% trans "Django" %}</h4>
+            <p>{% trans "Desarrollo de aplicaciones web modernas, seguras y escalables utilizando Django." %}</p>
+        </div>
+
+        <!-- JavaScript -->
+        <div class="skill-card">
+            <img src="{% static 'javascripts.jpeg' %}" alt="JavaScript Logo" class="skill-logo">
+            <h4>{% trans "JavaScript" %}</h4>
+            <p>{% trans "Interactividad en aplicaciones web con manejo de DOM, APIs y frameworks modernos." %}</p>
+        </div>
+
+        <!-- HTML & CSS -->
+        <div class="skill-card">
+            <img src="{% static 'css1.jpeg' %}" alt="HTML CSS Logo" class="skill-logo">
+            <h4>{% trans "HTML & CSS" %}</h4>
+            <p>{% trans "Diseño de interfaces responsivas y estilizadas con HTML5, CSS3 y Bootstrap." %}</p>
+        </div>
+
+        <!-- SQL -->
+        <div class="skill-card">
+            <img src="{% static 'sql7.webp' %}" alt="SQL Logo" class="skill-logo">
+            <h4>{% trans "SQL" %}</h4>
+            <p>{% trans "Gestión de bases de datos con MySQL, PostgreSQL y SQLite." %}</p>
+        </div>
+
+        <!-- GitHub -->
+        <div class="skill-card">
+            <img src="{% static 'git.png' %}" alt="GitHub Logo" class="skill-logo">
+            <h4>{% trans "GitHub" %}</h4>
+            <p>{% trans "Control de versiones y trabajo colaborativo con Git y GitHub." %}</p>
+        </div>
+
+        <!-- C++ -->
+        <div class="skill-card">
+            <img src="{% static 'cpp2.png' %}" alt="C++ Logo" class="skill-logo">
+            <h4>{% trans "C++" %}</h4>
+            <p>{% trans "Programación estructurada y orientada a objetos para aplicaciones de alto rendimiento." %}</p>
+        </div>
+    </div>
+</section>
+
+<style>
+/* === TITULO PRINCIPAL === */
+.skills-title {
+    text-align: center;
+    font-size: 3rem;
+    font-weight: 900;
+    margin-bottom: 1rem;
+    background: linear-gradient(90deg, #b399ff, #6a3d9a, #ff8cfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: glow 3s infinite alternate;
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 15px #b399ff55; }
+    to { text-shadow: 0 0 30px #ff8cfa55; }
+}
+
+.skills-subtitle {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #aaa;
+    margin-bottom: 3rem;
+}
+
+/* === GRID === */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 2rem;
+    justify-items: center;
+    padding: 0 1rem;
+}
+
+/* === TARJETAS === */
+.skill-card {
+    background: #252540;
+    border-radius: 16px;
+    padding: 2rem 1rem;
+    text-align: center;
+    color: #ddd;
+    box-shadow: 0 4px 20px rgba(179, 153, 255, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    max-width: 300px;
+}
+
+.skill-card:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 8px 30px rgba(255, 140, 250, 0.25);
+}
+
+/* Logo */
+.skill-logo {
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+    margin-bottom: 1rem;
+}
+
+/* Nombre */
+.skill-card h4 {
+    margin-bottom: 0.5rem;
+    color: #b399ff;
+    font-weight: 700;
+    font-size: 1.3rem;
+}
+
+/* Descripción */
+.skill-card p {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #ccc;
+}
+</style>
+{% endblock %}

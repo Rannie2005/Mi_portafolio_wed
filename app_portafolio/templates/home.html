@@ -1,0 +1,268 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}Inicio - Dev Ranniel Muñoz{% endblock %}
+
+{% block content %}
+
+
+<style>
+
+    body {
+        cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' height='32' width='32'><circle cx='16' cy='16' r='12' fill='url(%23grad)' stroke='%238a2be2' stroke-width='2'/><defs><radialGradient id='grad'><stop offset='0%' stop-color='%236a3d9a'/><stop offset='100%' stop-color='%23b399ff'/></radialGradient></defs></svg>") 16 16, auto;
+}
+
+/* CONTENEDOR CENTRAL */
+.home-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    margin-top: 3rem;
+}
+
+/* FOTO sin halo */
+.photo-wrapper {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    overflow: visible;
+    cursor: pointer;
+    filter: drop-shadow(0 0 20px #b399ffcc);
+    transition: filter 0.3s ease;
+}
+
+.photo-wrapper:hover {
+    filter: drop-shadow(0 0 40px #b399ff);
+}
+
+.photo-wrapper img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid #b399ff;
+    box-shadow: 0 0 35px #b399ffaa;
+    position: relative;
+    z-index: 2;
+}
+
+    @keyframes pulseHalo {
+        0%, 100% {
+            transform: scale(1);
+            opacity: 0.7;
+        }
+        50% {
+            transform: scale(1.15);
+            opacity: 0.3;
+        }
+    }
+
+    /* Animación de movimiento serpiente */
+
+    
+
+    /* TEXTO principal */
+    .intro-text {
+        max-width: 600px;
+        color: #d8bfff;
+        font-weight: 300;
+        font-size: 1.1rem;
+        line-height: 1.6;
+        text-shadow: 0 0 5px #8a2be2cc;
+    }
+
+    .intro-text h1 {
+        font-size: 3rem;
+        color: #b399ff;
+        font-weight: 700;
+        margin-bottom: 0.3rem;
+        letter-spacing: 2px;
+        text-shadow: 0 0 15px #b399ff;
+        user-select: none;
+    }
+
+    .intro-text h2 {
+        font-weight: 500;
+        color: #a67eff;
+        margin-bottom: 1rem;
+        font-style: italic;
+    }
+
+    /* SECCIONES extras */
+    section.skills, section.projects, section.contact {
+        margin: 4rem auto;
+        max-width: 900px;
+        color: #ccc;
+        text-align: center;
+        padding: 0 1rem;
+    }
+
+    section.skills h3, section.projects h3, section.contact h3 {
+        color: #b399ff;
+        font-weight: 700;
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        text-shadow: 0 0 10px #8a2be2cc;
+    }
+
+    /* Habilidades estilo "chips" */
+    .skills-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    .skill-chip {
+        background: linear-gradient(135deg, #6a3d9a, #b399ff);
+        padding: 0.6rem 1.2rem;
+        border-radius: 20px;
+        font-weight: 600;
+        box-shadow: 0 0 8px #b399ffaa;
+        transition: transform 0.3s ease;
+        cursor: default;
+        user-select: none;
+    }
+
+    .skill-chip:hover {
+        transform: scale(1.1);
+        box-shadow: 0 0 14px #d8bfff;
+    }
+
+    /* Proyectos destacados */
+    .project-cards {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 2rem;
+    }
+
+    .project-card {
+        background: #1e1e2f;
+        border-radius: 12px;
+        padding: 1.5rem;
+        max-width: 280px;
+        box-shadow: 0 0 20px #8a2be2bb;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+        color: #ddd;
+        text-align: left;
+    }
+
+    .project-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 0 30px #b399ffdd;
+    }
+
+    .project-card h4 {
+        margin-bottom: 0.5rem;
+        color: #b399ff;
+        font-weight: 700;
+    }
+
+    .project-card p {
+        font-size: 0.95rem;
+        line-height: 1.4;
+        color: #ccc;
+    }
+
+    /* Contacto simple */
+    .contact a {
+        display: inline-block;
+        margin: 0 1rem;
+        color: #b399ff;
+        font-size: 1.8rem;
+        transition: color 0.3s ease;
+        text-decoration: none;
+    }
+
+    .contact a:hover {
+        color: #d8bfff;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+        .home-container {
+            flex-direction: column;
+        }
+        .photo-wrapper {
+            margin: 0 auto;
+        }
+        .intro-text {
+            text-align: center;
+        }
+        .project-cards {
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+</style>
+
+<div class="home-container">
+    <div class="photo-wrapper" title="Dev Ranniel Muñoz">
+        <img src="{% static 'FOTO2X2RANIEL.jpg' %}" alt="Foto Dev Ranniel Muñoz" />
+        
+    </div>
+
+    <div class="intro-text">
+        <h1>Dev Ranniel Muñoz</h1>
+        <h2>{% trans 'Desarrollador Full Stack | Apasionado por Python y Django' %}</h2>
+        <p>
+            {% trans 'Bienvenido a mi portafolio profesional. Aquí encontrarás mis proyectos más destacados, mis habilidades técnicas y formas de contacto. Me especializo en desarrollo backend con Python y Django, y disfruto crear aplicaciones web modernas con interfaces limpias y animaciones profesionales.' %}
+        </p>
+    </div>
+</div>
+
+<section class="skills">
+    <h3>{% trans 'Habilidades Principales' %}</h3>
+    <div class="skills-list">
+        <div class="skill-chip">Python</div>
+        <div class="skill-chip">Django</div>
+        <div class="skill-chip">JavaScript</div>
+        <div class="skill-chip">HTML & CSS</div>
+        <div class="skill-chip">REST APIs</div>
+        <div class="skill-chip">Git / GitHub</div>
+        <div class="skill-chip">SQL DATABSE</div>
+    </div>
+</section>
+
+<section class="projects">
+    <h3>{% trans 'Proyectos Destacados' %}</h3>
+    <div class="project-cards">
+        <div class="project-card">
+            <h4>{% trans 'Sistema de Inscripción' %}</h4>
+            <p>{% trans 'Desarrollé una plataforma para gestionar inscripciones de estudiantes con autenticación y panel administrativo.' %}</p>
+        </div>
+        <div class="project-card">
+            <h4>{% trans 'Portafolio Web Animado' %}</h4>
+            <p>{% trans 'Este mismo portafolio, construido con Django, CSS y animaciones avanzadas para una experiencia profesional.' %}</p>
+        </div>
+        <div class="project-card">
+            <h4>{% trans 'Tienda Online' %}</h4>
+            <p>{% trans 'Una tienda web con carrito de compras, utilizando Bootstrap y Django para backend seguro.' %}</p>
+        </div>
+    </div>
+</section>
+
+<section class="contact">
+    <h3>{% trans 'Contacto Rápido' %}</h3>
+    <p>{% trans '¡Conectemos! Puedes encontrarme en:' %}</p>
+    <a class="bi bi-envelope" href="mailto:raniel.ant0880@gmail.com" title="Correo electrónico" target="_blank" rel="noopener">
+        
+    </a>
+    <a class="bi bi-linkedin" href="https://www.linkedin.com/in/ranniel-mu%C3%B1oz-de-la-cruz-02720a298/" title="LinkedIn" target="_blank" rel="noopener">
+        
+    </a>
+    <a class="bi bi-github" href="https://github.com/Rannie2005" title="GitHub" target="_blank" rel="noopener">
+        
+    </a>
+</section>
+
+<script>
+    // Puedes agregar animaciones adicionales aquí si quieres
+</script>
+{% endblock %}

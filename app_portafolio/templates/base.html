@@ -1,0 +1,426 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}Dev Ranniel Muñoz{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+    <style>
+        .language-form {
+            position: absolute;
+            bottom: 2rem;
+            left: 1rem;
+            width: auto;
+        }
+
+        .language-form select {
+            padding: 0.3rem 0.6rem;
+            border-radius: 5px;
+            border: 1px solid #b399ff;
+            background-color: #1e1e2f;
+            color: #ddd;
+            cursor: pointer;
+        }
+
+    /* Botón Cambiar para nojs */
+        .language-form button {
+            margin-left: 1rem;
+            padding: 0.3rem 0.8rem;
+            border-radius: 5px;
+            background-color: #6a3d9a;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+    /* Responsive para pantallas pequeñas */
+        @media (max-width: 768px) {
+            .language-form {
+            position: static;
+            margin-top: 1.5rem;
+            text-align: center;
+            width: 100%;
+            }
+
+            .language-form select {
+                width: 60%;
+                max-width: 200px;
+            }
+
+            .language-form button {
+                margin-left: 0;
+                margin-top: 0.5rem;
+                width: 40%;
+                max-width: 150px;
+            }
+        }
+
+        
+        /* RESET y estilos base // lo que esta arriva es lo nuevo si falla borralo*/
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #121212; /* negro oscuro */
+            color: #ddd;
+            overflow-x: hidden;
+            opacity: 0;
+            animation: fadeIn 1.2s forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Botón toggle menú hamburguesa */
+        #menu-toggle {
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 1100;
+            background: #6a3d9a;
+            border: none;
+            padding: 0.5rem 0.8rem;
+            border-radius: 6px;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: none;
+        }
+
+        /* MENÚ lateral izquierdo */
+        #sidebar {
+            width: 250px;
+            background-color: #1e1e2f; /* negro con toque morado */
+            padding: 2rem 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            box-shadow: 3px 0 15px rgba(128,0,255,0.4);
+            position: fixed;
+            height: 100vh;
+            left: 0;
+            top: 0;
+            transform: translateX(0);
+            z-index: 1050;
+            transition: transform 0.3s ease;
+        }
+
+        #sidebar a {
+            text-decoration: none;
+            color: #b399ff;
+            font-size: 1.2rem;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 0 5px transparent;
+        }
+
+        #sidebar a:hover {
+            color: #fff;
+            background: linear-gradient(90deg, #8a2be2, #b399ff);
+            box-shadow: 0 0 10px #b399ff;
+            transform: scale(1.1);
+        }
+
+        /* CONTENIDO principal */
+        main {
+            margin-left: 250px;
+            padding: 2rem 3rem;
+            transition: margin-left 0.3s ease;
+            min-height: 100vh;
+        }
+
+        /* NOMBRE arriba a la derecha */
+        header {
+            position: fixed;
+            top: 1rem;
+            right: 2rem;
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: #b399ff;
+            letter-spacing: 1.5px;
+            text-shadow: 0 0 5px #b399ff;
+            user-select: none;
+            z-index: 1000;
+            animation: pulseGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% {
+                text-shadow: 0 0 5px #b399ff;
+                color: #b399ff;
+            }
+            50% {
+                text-shadow: 0 0 20px #d8bfff;
+                color: #d8bfff;
+            }
+        }
+
+        /* Responsive para pantallas pequeñas */
+        @media (max-width: 768px) {
+            #menu-toggle {
+                display: block;
+            }
+            #sidebar {
+                transform: translateX(-260px);
+                padding-top: 4rem;
+            }
+            #sidebar.active {
+                transform: translateX(0);
+                box-shadow: 5px 0 20px rgba(128,0,255,0.6);
+                z-index: 1100;
+            }
+            main {
+                margin-left: 0;
+                padding: 1rem 1rem;
+            }
+            header {
+                font-size: 1rem;
+                right: 1rem;
+            }
+        }
+
+        /* Estilos para el contenido (puedes ajustarlos) */
+        .intro-text h1 {
+            font-size: 3rem;
+            color: #b399ff;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+            letter-spacing: 2px;
+            text-shadow: 0 0 15px #b399ff;
+            user-select: none;
+        }
+
+        .intro-text h2 {
+            font-weight: 500;
+            color: #a67eff;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+
+        .intro-text p {
+            max-width: 600px;
+            color: #d8bfff;
+            font-weight: 300;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            text-shadow: 0 0 5px #8a2be2cc;
+        }
+
+        /* Habilidades estilo "chips" */
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .skill-chip {
+            background: linear-gradient(135deg, #6a3d9a, #b399ff);
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            font-weight: 600;
+            box-shadow: 0 0 8px #b399ffaa;
+            transition: transform 0.3s ease;
+            cursor: default;
+            user-select: none;
+            color: white;
+        }
+
+        .skill-chip:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 14px #d8bfff;
+        }
+
+        /* Proyectos destacados */
+        .project-cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .project-card {
+            background: #1e1e2f;
+            border-radius: 12px;
+            padding: 1.5rem;
+            max-width: 280px;
+            box-shadow: 0 0 20px #8a2be2bb;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            color: #ddd;
+            text-align: left;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 30px #b399ffdd;
+        }
+
+        .project-card h4 {
+            margin-bottom: 0.5rem;
+            color: #b399ff;
+            font-weight: 700;
+        }
+
+        .project-card p {
+            font-size: 0.95rem;
+            line-height: 1.4;
+            color: #ccc;
+        }
+
+        /* Contacto simple */
+        .contact {
+            text-align: center;
+            margin-top: 3rem;
+            color: #ccc;
+        }
+
+        .contact a {
+            display: inline-block;
+            margin: 0 1rem;
+            color: #b399ff;
+            font-size: 1.8rem;
+            transition: color 0.3s ease;
+            text-decoration: none;
+        }
+
+        .contact a:hover {
+            color: #d8bfff;
+        }
+
+        #sidebar a.active {
+            color: #b399ff;
+            font-weight: 700;
+            text-shadow: 0 0 8px #b399ff;
+            /* O también un fondo ligero o brillo */
+            box-shadow: 0 0 8px #b399ff;
+            border-radius: 6px;
+        }
+
+    </style>
+</head>
+<body>
+    <header>Dev Ranniel Muñoz</header>
+
+    <button id="menu-toggle" aria-label="Abrir menú">☰</button>
+
+    <nav id="sidebar" aria-label="Menú de navegación principal">
+    <a href="{% url 'home' %}" class="{% if request.path == '/' %}active{% endif %}">{% trans 'Inicio' %}</a>
+    <a href="{% url 'educacion' %}" class="{% if request.path == '/education' %}active{% endif %}">{% trans 'Educacion' %}</a>
+    <a href="{% url 'proyecto' %}" class="{% if request.path == '/projects' %}active{% endif %}">{% trans 'Proyectos' %}</a>
+    <a href="{% url 'habilidades' %}" class="{% if request.path == '/skills' %}active{% endif %}">{% trans 'Habilidades' %}</a>
+    <a href="{% url 'contacto' %}" class="{% if request.path == '/contact' %}active{% endif %}">{% trans 'Contacto' %}</a>
+    <form action="{% url 'set_language' %}" method="post" class="language-form" style="margin-top: 2rem;">
+        {% csrf_token %}
+        <select name="language" onchange="this.form.submit()" aria-label="Cambiar idioma">
+            <option value="es" {% if LANGUAGE_CODE == 'es' %}selected{% endif %}>Español</option>
+            <option value="en" {% if LANGUAGE_CODE == 'en' %}selected{% endif %}>English</option>
+        </select>
+        <noscript>
+            <button type="submit">{% trans "Cambiar" %}</button>
+        </noscript>
+    </form>
+</nav>
+
+        <main>
+            {% block content %}
+            <!-- Contenido de la página -->
+            <div class="intro-text">
+                <h1>Dev Ranniel Muñoz</h1>
+                <h2>{% trans 'Desarrollador Full Stack | Apasionado por Python y Django' %}</h2>
+                <p>
+                    {% trans 'Bienvenido a mi portafolio profesional. Aquí encontrarás mis proyectos más destacados, mis habilidades técnicas y formas de contacto.  Me especializo en desarrollo backend con Python y Django, y disfruto crear aplicaciones web modernas con interfaces limpias y animaciones profesionales.' %}'
+                </p>
+            </div>
+
+            <section class="skills">
+                <h3>Habilidades Principales</h3>
+                <div class="skills-list">
+                    <div class="skill-chip">Python</div>
+                    <div class="skill-chip">Django</div>
+                    <div class="skill-chip">JavaScript</div>
+                    <div class="skill-chip">HTML & CSS</div>
+                    <div class="skill-chip">REST APIs</div>
+                    <div class="skill-chip">Git / GitHub</div>
+                </div>
+            </section>
+
+            <section class="projects">
+                <h3>Proyectos Destacados</h3>
+                <div class="project-cards">
+                    <div class="project-card">
+                        <h4>Sistema de Inscripción</h4>
+                        <p>Desarrollé una plataforma para gestionar inscripciones de estudiantes con autenticación y panel administrativo.</p>
+                    </div>
+                    <div class="project-card">
+                        <h4>Portafolio Web Animado</h4>
+                        <p>Este mismo portafolio, construido con Django, CSS y animaciones avanzadas para una experiencia profesional.</p>
+                    </div>
+                    <div class="project-card">
+                        <h4>Tienda Online</h4>
+                        <p>Una tienda web con carrito de compras, utilizando Bootstrap y Django para backend seguro.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="contact">
+                <h3>Contacto Rápido</h3>
+                <p>¡Conectemos! Puedes encontrarme en:</p>
+                <a href="raniel.ant0880@gmail.com" title="Correo electrónico" target="_blank" rel="noopener">✉️</a>
+                <a href="https://www.linkedin.com/in/devrannielmuñoz" title="LinkedIn" target="_blank" rel="noopener">🔗</a>
+                <a href="https://github.com/devranniel" title="GitHub" target="_blank" rel="noopener">🐙</a>
+            </section>
+            {% endblock %}
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const toggleBtn = document.getElementById('menu-toggle');
+            const sidebar = document.getElementById('sidebar');
+
+            toggleBtn.addEventListener('click', () => {
+                sidebar.classList.toggle('active');
+            });
+
+            // Animación para links del menú (opcional)
+            const links = sidebar.querySelectorAll('a');
+            links.forEach((link, i) => {
+                link.style.opacity = 0;
+                link.style.transform = "translateX(-20px)";
+                setTimeout(() => {
+                    link.style.transition = "all 0.5s ease";
+                    link.style.opacity = 1;
+                    link.style.transform = "translateX(0)";
+                }, i * 150 + 500);
+            });
+        });
+        document.addEventListener("click", (e) => {
+            const sidebar = document.getElementById('sidebar');
+            const toggleBtn = document.getElementById('menu-toggle');
+            // Si el sidebar está activo, y el clic NO fue ni en el sidebar ni en el botón toggle,
+            // entonces quitar clase active para ocultar el menú
+            if (sidebar.classList.contains('active') &&
+                !sidebar.contains(e.target) &&
+                e.target !== toggleBtn) {
+                sidebar.classList.remove('active');
+            }
+});
+    </script>
+</body>
+</html>

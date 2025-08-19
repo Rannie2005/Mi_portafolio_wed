@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}Contacto - Dev Ranniel Muñoz{% endblock %}
+
+{% block content %}
+<section class="contact-section">
+    <h1 class="contact-title">{% trans "Ponte en Contacto" %}</h1>
+
+    <!-- Redes Sociales con Bootstrap Icons -->
+    <div class="social-links">
+        <a href="https://github.com/Rannie2005" target="_blank">
+            <i class="bi bi-github" style="font-size: 2rem;"></i>
+            <p>GitHub</p>
+        </a>
+        <a href="mailto:raniel.ant0880@gmail.com" target="_blank">
+            <i class="bi bi-envelope-fill" style="font-size: 2rem;"></i>
+            <p>Gmail</p>
+        </a>
+        <a href="https://www.linkedin.com/in/ranniel-mu%C3%B1oz-de-la-cruz-02720a298/" target="_blank">
+            <i class="bi bi-linkedin" style="font-size: 2rem;"></i>
+            <p>LinkedIn</p>
+        </a>
+        <a href="https://web.facebook.com/ranniel.munoz.2025" target="_blank">
+            <i class="bi bi-facebook" style="font-size: 2rem;"></i>
+            <p>Facebook</p>
+        </a>
+        <a href="https://www.instagram.com/ranniel.yt/" target="_blank">
+            <i class="bi bi-instagram" style="font-size: 2rem;"></i>
+            <p>Instagram</p>
+        </a>
+        <a href="tel:809 837 4609">
+            <i class="bi bi-telephone-fill" style="font-size: 2rem;"></i>
+            <p>809 837 4609</p>
+        </a>
+    </div>
+
+    <!-- Formulario de Contacto -->
+    <div class="contact-form-container">
+        <h2>{% trans "Envíame un Mensaje" %}</h2>
+        <form method="post" action="{% url 'contacto' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="email">{% trans "Tu Correo" %}</label>
+                <input type="email" id="email" name="email" placeholder="ejemplo@correo.com" required>
+            </div>
+            <div class="form-group">
+                <label for="subject">{% trans "Asunto" %}</label>
+                <input type="text" id="subject" name="subject" placeholder="Idea de proyecto, colaboración..." required>
+            </div>
+            <div class="form-group">
+                <label for="message">{% trans "Mensaje" %}</label>
+                <textarea id="message" name="message" rows="5" placeholder="Escribe tu mensaje..." required></textarea>
+            </div>
+            <button type="submit" class="send-btn">{% trans "Enviar Mensaje" %}</button>
+        </form>
+    </div>
+</section>
+
+<style>
+.contact-section {
+    text-align: center;
+    padding: 40px 20px;
+}
+.contact-title {
+    font-size: 2.8rem;
+    margin-bottom: 30px;
+    font-weight: 700;
+    color: #6a3d9a;
+}
+.social-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 50px;
+}
+.social-links a {
+    text-decoration: none;
+    color: inherit;
+    text-align: center;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+.social-links a:hover {
+    transform: scale(1.2);
+    color: #6a3d9a;
+}
+.social-links p {
+    margin-top: 5px;
+    font-weight: 500;
+}
+.contact-form-container {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: left;
+}
+.contact-form-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+    color: #6a3d9a;
+}
+.form-group {
+    margin-bottom: 15px;
+}
+.form-group label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+.send-btn {
+    display: block;
+    margin: 0 auto;
+    background: #6a3d9a;
+    color: #fff;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+.send-btn:hover {
+    background: #4f2c7a;
+}
+</style>
+{% endblock %}

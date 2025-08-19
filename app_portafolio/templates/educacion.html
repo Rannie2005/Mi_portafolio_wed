@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block title %}Educación{% endblock %}
+
+{% block content %}
+<style>
+    .edu-section {
+        background-color: #121212;
+        color: #d8bfff;
+        padding: 3rem 1rem;
+        border-radius: 15px;
+        box-shadow: 0 0 25px rgba(179, 153, 255, 0.2);
+    }
+    .edu-header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+    .edu-header img {
+        height: 70px;
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgba(179, 153, 255, 0.5);
+    }
+    .course-card {
+        background-color: #1e1e2f;
+        color: #e5d4ff;
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 0 20px rgba(179, 153, 255, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .course-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 0 25px rgba(179, 153, 255, 0.4);
+    }
+    .course-card img.main-img {
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+        max-height: 180px;
+        object-fit: cover;
+    }
+    .logo-insignia {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+    .logo-insignia img {
+        height: 40px;
+        object-fit: contain;
+    }
+    .btn-purple {
+        background: linear-gradient(135deg, #6a3d9a, #b399ff);
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        font-weight: 600;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(179, 153, 255, 0.3);
+        transition: 0.3s;
+    }
+    .btn-purple:hover {
+        box-shadow: 0 0 20px rgba(179, 153, 255, 0.6);
+        transform: scale(1.05);
+    }
+
+    h3.mb-4.bi {
+    margin-top: 4rem;  /* o el tamaño que prefieras */
+}
+
+</style>
+
+<div class="container my-5 edu-section">
+    <h1 class="mb-4 bi bi-mortarboard fs-1 text-info  ">{% trans ' Educacion Superior' %}</h1>
+
+
+    <div class="edu-header">
+        <img src="{% static 'ITLA.png' %}" alt="ITLA Logo">
+        <div>
+            <h2 class="mb-1"><strong>{% trans 'Universidad' %}:</strong>{% trans 'Instituto Tecnológico de las Américas (ITLA)' %}</h2>
+            <p class="mb-1"><strong>{% trans 'Desarrollo de Software' %}</strong></p>
+        </div>
+    </div>
+    <p class="mb-4">
+        {% blocktrans trimmed %}
+            La carrera de Desarrollo de Software forma profesionales altamente capacitados para diseñar, desarrollar, implementar y mantener aplicaciones y sistemas tecnológicos completos. Los estudiantes adquieren conocimientos sólidos tanto en desarrollo backend —gestionando bases de datos, servidores y lógica de negocio— como en desarrollo frontend —creando interfaces intuitivas y atractivas para los usuarios—. Además, se profundiza en metodologías ágiles, control de versiones, pruebas y despliegue de software, preparando a los egresados para afrontar los retos del mundo tecnológico actual y aportar soluciones innovadoras en múltiples industrias.
+        {% endblocktrans %}
+    </p>
+
+    <a target="_blank" class="btn btn-purple" style="margin-bottom: 2rem;">
+        {% trans 'En Curso' %}
+    </a>
+
+    <div style="height: 3rem;"></div> 
+
+    <div class="edu-header">
+        <img src="{% static 'logo-uasd3.png' %}" alt="ITLA Logo">
+        <div>
+            <h2 class="mb-1"><strong>{% trans 'Universidad:' %}</strong>{% trans 'Universidad Autónoma de Santo Domingo (UASD)' %}</h2>
+            <p class="mb-1"><strong>{% trans 'Programa de Inglés por Inmersión' %}</strong></p>
+        </div>
+    </div>
+    <p class="mb-4">
+        {% trans descripcion_carrera2 %}
+    </p>
+
+    <a href="https://drive.google.com/file/d/1CqVpOIzdY-rOJRv7y-7WsxvrkMqtP2uT/view?usp=drive_link" target="_blank" class="btn btn-purple" style="margin-bottom: 2rem;">
+        {% trans 'Ver Diploma' %}
+    </a>
+
+    <div style="height: 3rem;"></div> 
+
+    <h1 class="mb-4 bi bi-display fs-1 text-info  "> {% trans 'Cursos y Certificaciones' %}</h1>
+    <div style="height: 3rem;"></div> 
+    <div class="row">
+        {% for curso in cursos %}
+        <div class="col-md-4 mb-4">
+            <div class="card course-card h-100">
+                <img src="{{ curso.imagen.url }}" class="card-img-top main-img" alt="{{ curso.nombre }}">
+                <div class="card-body">
+                    <div class="logo-insignia">
+                        {% if curso.logo_institucion %}
+                            <img src="{{ curso.logo_institucion.url }}" alt="Logo institución">
+                        {% endif %}
+                        {% if curso.insignia %}
+                            <img src="{{ curso.insignia.url }}" alt="Insignia">
+                        {% endif %}
+                    </div>
+                    <h5 class="card-title">{{ curso.nombre }}</h5>
+                    <p class="card-text">{{ curso.descripcion }}</p>
+                    {% if curso.link %}
+                        <a href="{{ curso.link }}" target="_blank" class="btn btn-purple">{% trans 'Ver Certificado' %}</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>No hay cursos registrados aún.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
